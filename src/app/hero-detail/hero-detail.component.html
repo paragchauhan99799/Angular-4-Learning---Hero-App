@@ -4,7 +4,38 @@
     <span>id: </span>{{hero.id}}
   </div>
   <div>
-    <label>name: <input [(ngModel)]="hero.name" placeholder="name"/></label>
+    <!-- <label>name:  -->
+      <!-- <input [(ngModel)]="hero.name" placeholder="name"/> -->
+      <form [formGroup]="angForm" novalidate>
+        <div>
+          <div class="form-group">
+            <label class="center-block">Name:
+              <input class="form-control" formControlName="name" required>
+            </label>
+          </div>
+          <div *ngIf="angForm.controls['name'].invalid && (angForm.controls['name'].dirty || angForm.controls['name'].touched)" class="alert alert-danger">
+            <div *ngIf="angForm.controls['name'].errors.required">
+              Name required.
+            </div>
+          </div>
+        </div>
+        <!-- <div>
+          <div class="form-group">
+            <label class="center-block">Moble:
+              <input class="form-control" formControlName="mobile" required>
+            </label>
+          </div>
+          <div *ngIf="mobile.invalid && (mobile.dirty || mobile.touched)" class="alert alert-danger">
+            <div *ngIf="mobile.errors.required">
+              Mobile number required.
+            </div>
+            <div *ngIf="mobile.errors.maxLength">
+              Mobile length should be 10
+            </div>
+          </div>
+        </div> -->
+    </form>
+    <!-- </label> -->
   </div>
 </div>
 <button (click)="goBack()">go back</button>

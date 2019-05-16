@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Hero } from '../hero';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -14,12 +15,16 @@ import { HeroService }  from '../hero.service';
 
 export class HeroDetailComponent implements OnInit {
   hero: Hero;
-  
+  angForm: FormGroup;
+
   constructor(
     private route: ActivatedRoute,
     private heroService: HeroService,
-    private location: Location
-  ) { }
+    private location: Location,
+    private fb: FormBuilder
+  ) {
+    this.createForm();
+  }
 
   ngOnInit() {
     this.getHero();
@@ -37,4 +42,11 @@ export class HeroDetailComponent implements OnInit {
     this.location.back();
   }
 
+  createForm(): void {
+    this.angForm = this.fb.group({
+      name: ['', Validators.required ],
+      // mobile: ['', [Validators.required, Validators.maxLength(3)] ]
+    });
+    console.log('Angular Form :: ', this.angForm);
+  }
 }

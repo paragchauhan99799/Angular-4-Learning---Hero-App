@@ -1,0 +1,11 @@
+/* ::ng-deep .shcheduleIcon .wc-date-container > i {
+    display: none;
+}
+::ng-deep .shcheduleIcon .wc-date-container > span::before {
+    position: absolute;
+    font-family: 'shMain' !important;
+    top: 5px;
+    right: 10px;
+    content: "\e90b";
+    font-size: 20px;
+} */
