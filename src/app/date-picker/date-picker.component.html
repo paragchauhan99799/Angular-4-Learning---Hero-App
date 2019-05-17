@@ -14,5 +14,8 @@
   </angular2-date-picker>
 </div>
 <div style="margin: 60px 0px">
-  {{currentTime}}
+  <span style="margin-right: 10px">Current Time : </span>{{currentTime}}
+</div>
+<div style="margin: 60px 0px">
+  <span style="margin-right: 10px">Timezone Time : </span>{{moment(current_datetime).format('LLLL')}}
 </div>

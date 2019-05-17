@@ -11,23 +11,21 @@ import * as momentTimeZone from 'moment-timezone';
   ]
 })
 export class DatePickerComponent implements OnInit {
+  moment = moment;
+  currentTime = moment(new Date()).format('LLLL');
+
   timezoneVal: string;
   timeZones: string[];
 
-  date = moment(new Date());
-  currentTime = moment(new Date()).format('LLLL');
-  minDate = new Date();
-
-  // const tempDate = moment.tz(this.date, this.timezoneVal).format('MMMM Do YYYY, h:mm a');
-  // new Date(moment(tempDate, 'MMMM Do YYYY, h:mm a'))
+  current_datetime = '';
 
 	settings = {
     bigBanner: true,
     timePicker: true,
     clockHour: 12,
-    format: 'dd-mm-yyyy h:mm a',
-    defaultOpen: true,
-    minDate: this.minDate,
+    format: 'dd-MMM-yyyy hh:mm a',
+    defaultOpen: false,
+    minDate: new Date(),
     closeOnSelect: false,
     preserveTimeValue: false,
     // incrementByMinutes: 30,
@@ -35,19 +33,24 @@ export class DatePickerComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.current_datetime = momentTimeZone(new Date()).tz('UTC')._d;
     this.timeZones =  momentTimeZone.tz.names();
     this.timezoneVal = 'UTC';
   }
 
   onDateSelect(): void {
-    console.log('On Date Select :: ', this.date);
+    console.log('On Date Select :: ', this.current_datetime);
   }
 
   setNewTimeZone():void {
     console.log('Time Zome Selcted :: ', this.timezoneVal);
-    const tempDate = momentTimeZone.tz(this.date, this.timezoneVal).format('MMMM Do YYYY, h:mm a');
-    var tempMoment = moment(tempDate, 'MMMM Do YYYY, h:mm a').toLocaleString();
-    this.minDate = new Date(tempMoment);
-    console.log('Min Date :: ', this.minDate);
+    
+    var tempSetting = this.settings;
+    tempSetting.minDate = momentTimeZone(this.settings.minDate).tz(this.timezoneVal);;
+    this.settings = tempSetting;
+
+    this.current_datetime = momentTimeZone(this.current_datetime).tz(this.timezoneVal);
+
+    console.log('Selected Date :: ', this.current_datetime);
   }
 }
